@@ -58,8 +58,12 @@ def cd(directory, current_folder,folders_list):
         return new_folder, folders_list
     return current_folder, folders_list
 
-def back():
-    pass
+def back(folders_list):
+    if folders_list:
+        folders_list.pop()
+        current_folder = folders_list[-1]
+    return current_folder, folders_list
+    
 
 
 def text_input():
