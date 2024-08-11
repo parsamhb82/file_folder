@@ -97,6 +97,26 @@ class Folder:
         file = self.search_files_by_name(file_name, file_format)
         file : File
         file.edit_line(line, text)
+    
+    def remove(self, name):
+        name_list = name.split('.')
+        if len(name_list) == 2:
+            file = self.search_files_by_name(name_list[0], name_list[1])
+            if file == None:
+                print('no such file')
+                return
+            self.__files.remove(file)
+            return
+        else:
+            folder = self.search_folders_by_name(name)
+            if folder == None:
+                print('no such folder')
+                return
+            self.__folders.remove(folder)
+            return
+
+
+
 
 
 
