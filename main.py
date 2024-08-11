@@ -18,6 +18,8 @@ cat -> file text
 
 root_folder = Folder('/')
 this_folder = root_folder
+folders_list = []
+folders_list.append(this_folder)
 
 def find_by_directory(directory : str, this_folder : Folder):
     direction_folders = []
@@ -55,6 +57,9 @@ def cd(directory, current_folder,folders_list):
             folders_list.append(folder)
         return new_folder, folders_list
     return current_folder, folders_list
+
+def back():
+    pass
 
 
 def text_input():
