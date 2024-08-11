@@ -3,17 +3,17 @@ from folder import Folder
 
 """
 commands : 
-cd 
-mkdir -> new folder
-mkfile -> new file
+cd check
+mkdir -> new folder check
+mkfile -> new file check
 cp -> copy
 mv -> cut
-rm -> remove
-ls -> print all directories
-filenew -> new text in the file
-fileedit -> edit a line in the file 
-cat -> file text
-../ -> goes back
+rm -> remove check
+ls -> print all directories check
+filenew -> new text in the file check
+fileedit -> edit a line in the file check
+cat -> file text check
+../ -> goes back check
 """
 
 root_folder = Folder('/')
