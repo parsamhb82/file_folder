@@ -89,7 +89,14 @@ class Folder:
         file = self.search_files_by_name(files_name, files_format)
         file : File
         file.new_text(text)
-
+    
+    def edit_line_file(self, file_name, file_format, text : str, line : int):
+        """
+        searchs for a file and replace a line from that file
+        """
+        file = self.search_files_by_name(file_name, file_format)
+        file : File
+        file.edit_line(line, text)
 
 
 
