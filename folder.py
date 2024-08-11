@@ -36,12 +36,12 @@ class Folder:
         adds a new folder to this directory and sets the name as the new_folder_name
 
         """
-        self.folders.append(Folder(new_folder_name))
+        self.__folders.append(Folder(new_folder_name))
     def add_file(self, new_file_name, new_file_format):
         """
         adds a new file to this directory and sets its name as the first argumant and format as the second argumant
         """
-        self.folders.append(File(new_file_name,new_file_format))
+        self.__files.append(File(new_file_name,new_file_format))
     
     def print_all_dir(self):
         """

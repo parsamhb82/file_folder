@@ -13,11 +13,11 @@ class File:
         """
         initiates the attributes:
         name, format
-        a text variable as a string to write a text 
+        a text variable as a list for each line of the text written in the file 
         """
         self.__name = name
         self.__format = format
-        self.__text = ''
+        self.__text_list = []
     
     def get_name(self):
         """
@@ -35,11 +35,11 @@ class File:
         """
         deletes past text and adds a new text
         """
-        self.__text = new_text
+        self.__text_list = new_text
     
     def get_text(self):
         """
         gives the text written in the file
         """
-        return self.__text
+        return self.__text_list
     
