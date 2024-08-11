@@ -1,6 +1,21 @@
 from file import File
 from folder import Folder
 
+"""
+commands : 
+cd 
+mkdir -> new folder
+mkfile -> new file
+cp -> copy
+mv -> cut
+rm -> remove
+ls -> print all directories
+filenew -> new text in the file
+fileedit -> edit a line in the file 
+cat -> file text
+../ -> goes back
+"""
+
 root_folder = Folder('/')
 this_folder = root_folder
 
