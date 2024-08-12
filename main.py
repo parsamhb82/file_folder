@@ -21,10 +21,14 @@ this_folder = root_folder
 folders_list = []
 folders_list.append(this_folder)
 
-def find_by_directory(directory : str, this_folder : Folder):
+def find_by_directory(directory : str, this_folder : Folder, root_folder : Folder):
     direction_folders = []
+    if directory[0] == '/':
+        del directory[0]
+        current_folder = root_folder
+    else:
+        current_folder = this_folder
     directory_list = directory.split('/')
-    current_folder = this_folder
     current_folder : Folder
     for i in range(len(directory_list)):
         if i == len(directory_list) - 1 :
@@ -50,12 +54,19 @@ def find_by_directory(directory : str, this_folder : Folder):
                 print('no such file or directory')
                 return False , None, None, []
             direction_folders.append(current_folder)
-def cd(directory, current_folder,folders_list):
-    found, new_folder, file, direction_folders= find_by_directory(directory, current_folder)
-    if found and file == None:
+def cd(directory, current_folder,folders_list, root_folder):
+    if directory[0] != '/':
+        flag = 0
+    else:
+        flag = 1
+    found, new_folder, file, direction_folders= find_by_directory(directory, current_folder, root_folder)
+    if found and file == None and flag == 0:
         for folder in direction_folders:
             folders_list.append(folder)
         return new_folder, folders_list
+    elif found and file == None and flag == 1 :
+        folders_list = direction_folders
+
     return current_folder, folders_list
 
 def back(folders_list):
@@ -66,9 +77,9 @@ def back(folders_list):
 
 
 
-def move_file_to_file(source_path: str, destination_path: str, this_folder : Folder):
-    found_source, source_folder, source_file, _ = find_by_directory(source_path,  this_folder )
-    found_destination, destination_folder, destination_file, _ = find_by_directory(destination_path,  this_folder )
+def move_file_to_file(source_path: str, destination_path: str, this_folder : Folder, root_folder):
+    found_source, source_folder, source_file, _ = find_by_directory(source_path,  this_folder, root_folder )
+    found_destination, destination_folder, destination_file, _ = find_by_directory(destination_path,  this_folder, root_folder )
     if not found_source or source_file == None :
         print("Source file not found")
         return False
@@ -93,9 +104,9 @@ def move_file_to_file(source_path: str, destination_path: str, this_folder : Fol
         source_folder.rmv(source_path.split('/')[-1])
         return True
 
-def copy_file_to_file(source_path: str, destination_path: str, this_folder : Folder):
-    found_source, source_folder, source_file, _ = find_by_directory(source_path,  this_folder )
-    found_destination, destination_folder, destination_file, _ = find_by_directory(destination_path,  this_folder )
+def copy_file_to_file(source_path: str, destination_path: str, this_folder : Folder, root_folder):
+    found_source, source_folder, source_file, _ = find_by_directory(source_path,  this_folder, root_folder )
+    found_destination, destination_folder, destination_file, _ = find_by_directory(destination_path,  this_folder, root_folder )
     if not found_source or source_file == None :
         print("Source file not found")
         return False
@@ -127,9 +138,9 @@ def text_input():
         text.append(inp)
     return text
 
-def copy_folder_to_folder(source_path: str , destination_path: str , this_folder : Folder) :
-    found_source , source_folder , _, _ = find_by_directory(source_path , this_folder)
-    found_destination , destination_folder, _, _ = find_by_directory(destination_path , this_folder)
+def copy_folder_to_folder(source_path: str , destination_path: str , this_folder : Folder, root_folder) :
+    found_source , source_folder , _, _ = find_by_directory(source_path , this_folder, root_folder)
+    found_destination , destination_folder, _, _ = find_by_directory(destination_path , this_folder, root_folder)
     if not found_source or source_folder == None :
         print("source folder was not found")
         return False
@@ -139,9 +150,9 @@ def copy_folder_to_folder(source_path: str , destination_path: str , this_folder
     else:
         source_folder.folder_adder(destination_folder)
 
-def move_folder_to_folder(source_path: str , destination_path: str , this_folder : Folder) :
-    found_source , source_folder , _, source_folders = find_by_directory(source_path , this_folder)
-    found_destination , destination_folder, _, _ = find_by_directory(destination_path , this_folder)
+def move_folder_to_folder(source_path: str , destination_path: str , this_folder : Folder, root_folder) :
+    found_source , source_folder , _, source_folders = find_by_directory(source_path , this_folder, root_folder)
+    found_destination , destination_folder, _, _ = find_by_directory(destination_path , this_folder, root_folder)
     if not found_source or source_folder == None :
         print("source folder was not found")
         return False
