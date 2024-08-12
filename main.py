@@ -8,7 +8,7 @@ mkdir -> new folder check
 mkfile -> new file check
 cp -> copy
 mv -> cut
-rm -> remove check
+rm -> rmv check
 ls -> print all directories check
 filenew -> new text in the file check
 fileedit -> edit a line in the file check
@@ -90,7 +90,7 @@ def move_file_to_file(source_path: str, destination_path: str, this_folder : Fol
             new_file.new_text(file_text)
 
 
-        source_folder.remove(source_path.split('/')[-1])
+        source_folder.rmv(source_path.split('/')[-1])
         return True
 
 def copy_file_to_file(source_path: str, destination_path: str, this_folder : Folder):
@@ -126,4 +126,33 @@ def text_input():
         inp = input('')
         text.append(inp)
     return text
+
+def copy_folder_to_folder(source_path: str , destination_path: str , this_folder : Folder) :
+    found_source , source_folder , _, _ = find_by_directory(source_path , this_folder)
+    found_destination , destination_folder, _, _ = find_by_directory(destination_path , this_folder)
+    if not found_source or source_folder == None :
+        print("source folder was not found")
+        return False
+    elif destination_folder == None or not found_destination :
+        print("destination folder was not found")
+        return False
+    else:
+        source_folder.folder_adder(destination_folder)
+
+def move_folder_to_folder(source_path: str , destination_path: str , this_folder : Folder) :
+    found_source , source_folder , _, source_folders = find_by_directory(source_path , this_folder)
+    found_destination , destination_folder, _, _ = find_by_directory(destination_path , this_folder)
+    if not found_source or source_folder == None :
+        print("source folder was not found")
+        return False
+    elif destination_folder == None or not found_destination :
+        print("destination folder was not found")
+        return False
+    else:
+        destination_folder.folder_adder(source_folder)
+        source_folders[-2].rmv(source_folders[-1].get_name())
+
+
+
+
 

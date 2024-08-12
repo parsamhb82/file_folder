@@ -98,7 +98,7 @@ class Folder:
         file : File
         file.edit_line(line, text)
     
-    def remove(self, name):
+    def rmv(self, name):
         name_list = name.split('.')
         if len(name_list) == 2:
             file = self.search_files_by_name(name_list[0], name_list[1])
@@ -114,7 +114,9 @@ class Folder:
                 return
             self.__folders.remove(folder)
             return
-
+    
+    def folder_adder(self, folder):
+        self.__folders.append(folder)
 
 
 
