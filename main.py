@@ -63,7 +63,34 @@ def back(folders_list):
         folders_list.pop()
         current_folder = folders_list[-1]
     return current_folder, folders_list
-    
+
+
+
+def move(source_path: str, destination_path: str, root_folder: Folder):
+    found_source, source_folder, source_file, direction_folders = find_by_directory(source_path,  root_folder)
+    found_destination, destination_folder, destination_file, direction_folders = find_by_directory(destination_path,  root_folder)
+    if not found_source or source_file == None :
+        print("Source file not found")
+        return False
+    elif not found_destination or destination_folder == None:
+        print("Destination folder not found")
+        return False
+    else:
+        file_text = source_file.get_text()
+        if destination_file:
+            first_text = destination_file.get_text()
+            file_text = first_text + file_text
+            destination_file.new_text(file_text)
+        else:
+            new_file_name = destination_file.get_name()
+            new_file_format = destination_file.get_format()
+            destination_folder.add_file(new_file_name, new_file_format)
+            new_file = destination_folder.search_files_by_name(new_file_name, new_file_format)
+            new_file.new_text(file_text)
+
+
+        source_folder.remove(f"{source_file.get_name()}.{source_file.get_format()}")
+        return True
 
 
 def text_input():
