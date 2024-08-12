@@ -118,6 +118,9 @@ class Folder:
     def folder_adder(self, folder):
         self.__folders.append(folder)
 
+    def new_name(self, name):
+        self.__name = name
+
 
 
 

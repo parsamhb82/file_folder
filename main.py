@@ -180,6 +180,30 @@ def remv(file_path, this_folder, root_folder):
         folder.rmv(f"{file.get_name()}.{file.get_format()}")
     elif found_bool == True and file == None:
         folders_path[-2].rmv(folders_path[-1].get_name())
+
+def new_folder_file_name(path, this_folder, root_folder, name):
+    found_bool, folder , file, folders_path = find_by_directory(path,  this_folder, root_folder)
+    if file != None and found_bool :
+        file : File
+        file.new_name(name)
+    elif file == None and found_bool and folder != None:
+        folder.new_name(name)
+        
+def mkfile(path, this_folder, root_folder):
+    file_name = input("enter the file name: ")
+    file_format = input("enter the file format: ")
+    if path != '':
+        found_bool, folder , file, folders_path = find_by_directory(path,  this_folder, root_folder )
+        if found_bool and folder != None and file == None:
+            folder : Folder
+            folder.add_file(file_name, file_format)
+    else:
+        this_folder : Folder
+        this_folder.add_file(file_name, file_format)
+
+
+        
+
         
 
 

@@ -46,3 +46,6 @@ class File:
     def edit_line(self, line, text):
         text_index = line - 1
         self.__text_list[text_index] = text
+    
+    def new_name(self, name):
+        self.__name = name
