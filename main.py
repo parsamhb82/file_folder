@@ -201,6 +201,17 @@ def mkfile(path, this_folder, root_folder):
         this_folder : Folder
         this_folder.add_file(file_name, file_format)
 
+def mkfolder(path = None):
+    found_bool , folder, file, _ = find_by_directory(path,  this_folder, root_folder )
+    if found_bool and folder and file == None and path != None:
+        folder_name = input("folder_name: ")
+        folder.add_folder(folder_name)
+    elif found_bool and folder and file == None and path == None:
+        folder_name = input("folder_name: ")
+        this_folder.add_folder(folder_name)
+    else:
+        print("no such directory")
+
 
         
 
