@@ -66,7 +66,7 @@ def back(folders_list):
 
 
 
-def move(source_path: str, destination_path: str, this_folder : Folder):
+def move_file_to_file(source_path: str, destination_path: str, this_folder : Folder):
     found_source, source_folder, source_file, _ = find_by_directory(source_path,  this_folder )
     found_destination, destination_folder, destination_file, _ = find_by_directory(destination_path,  this_folder )
     if not found_source or source_file == None :
@@ -93,7 +93,7 @@ def move(source_path: str, destination_path: str, this_folder : Folder):
         source_folder.remove(source_path.split('/')[-1])
         return True
 
-def copy(source_path: str, destination_path: str, this_folder : Folder):
+def copy_file_to_file(source_path: str, destination_path: str, this_folder : Folder):
     found_source, source_folder, source_file, _ = find_by_directory(source_path,  this_folder )
     found_destination, destination_folder, destination_file, _ = find_by_directory(destination_path,  this_folder )
     if not found_source or source_file == None :
