@@ -93,6 +93,30 @@ def move(source_path: str, destination_path: str, this_folder : Folder):
         source_folder.remove(source_path.split('/')[-1])
         return True
 
+def copy(source_path: str, destination_path: str, this_folder : Folder):
+    found_source, source_folder, source_file, _ = find_by_directory(source_path,  this_folder )
+    found_destination, destination_folder, destination_file, _ = find_by_directory(destination_path,  this_folder )
+    if not found_source or source_file == None :
+        print("Source file not found")
+        return False
+    elif destination_folder == None:
+        print("Destination folder not found")
+        return False
+    else:
+        file_text = source_file.get_text()
+        if destination_file != None:
+            first_text = destination_file.get_text()
+            file_text = first_text + file_text
+            destination_file.new_text(file_text)
+        else:
+            new_file_whole_name = destination_path.split('/')[-1]
+            new_file_name = new_file_whole_name.split('.')[0]
+            new_file_format = new_file_whole_name.split('.')[1]
+            destination_folder.add_file(new_file_name, new_file_format)
+            new_file = destination_folder.search_files_by_name(new_file_name, new_file_format)
+            new_file.new_text(file_text)
+
+        return True
 
 def text_input():
     print("enter your text (0/end/0 = finish)")
