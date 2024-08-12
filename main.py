@@ -163,7 +163,7 @@ def move_folder_to_folder(source_path: str , destination_path: str , this_folder
         destination_folder.folder_adder(source_folder)
         source_folders[-2].rmv(source_folders[-1].get_name())
 
-def cat(file_path):
+def cat(file_path, this_folder, root_folder):
     found_file, _ , current_file, _ = find_by_directory(file_path,  this_folder, root_folder )
     if found_file and current_file != None:
         current_file : File
@@ -172,6 +172,16 @@ def cat(file_path):
             print(text)
     else:
         print("no such file")
+def remv(file_path, this_folder, root_folder):
+    found_bool, folder , file, folders_path = find_by_directory(file_path,  this_folder, root_folder )
+    folder : Folder
+    file : File
+    if found_bool == True and file != None:
+        folder.rmv(f"{file.get_name()}.{file.get_format()}")
+    elif found_bool == True and file == None:
+        folders_path[-2].rmv(folders_path[-1].get_name())
+        
+
 
 
 
