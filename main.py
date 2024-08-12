@@ -33,7 +33,7 @@ def find_by_directory(directory : str, this_folder : Folder):
                 file = current_folder.search_files_by_name(file_whole_name[0], file_whole_name[1])
                 if file == None:
                     print ('no such file or directory')
-                    return False , None, None, []
+                    return False , current_folder, None, direction_folders
                 return True, current_folder, file, direction_folders
             else:
                 current_folder = current_folder.search_folders_by_name(directory_list[i])
@@ -66,30 +66,31 @@ def back(folders_list):
 
 
 
-def move(source_path: str, destination_path: str, root_folder: Folder):
-    found_source, source_folder, source_file, direction_folders = find_by_directory(source_path,  root_folder)
-    found_destination, destination_folder, destination_file, direction_folders = find_by_directory(destination_path,  root_folder)
+def move(source_path: str, destination_path: str, this_folder : Folder):
+    found_source, source_folder, source_file, _ = find_by_directory(source_path,  this_folder )
+    found_destination, destination_folder, destination_file, _ = find_by_directory(destination_path,  this_folder )
     if not found_source or source_file == None :
         print("Source file not found")
         return False
-    elif not found_destination or destination_folder == None:
+    elif destination_folder == None:
         print("Destination folder not found")
         return False
     else:
         file_text = source_file.get_text()
-        if destination_file:
+        if destination_file != None:
             first_text = destination_file.get_text()
             file_text = first_text + file_text
             destination_file.new_text(file_text)
         else:
-            new_file_name = destination_file.get_name()
-            new_file_format = destination_file.get_format()
+            new_file_whole_name = destination_path.split('/')[-1]
+            new_file_name = new_file_whole_name.split('.')[0]
+            new_file_format = new_file_whole_name.split('.')[1]
             destination_folder.add_file(new_file_name, new_file_format)
             new_file = destination_folder.search_files_by_name(new_file_name, new_file_format)
             new_file.new_text(file_text)
 
 
-        source_folder.remove(f"{source_file.get_name()}.{source_file.get_format()}")
+        source_folder.remove(source_path.split('/')[-1])
         return True
 
 
