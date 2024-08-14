@@ -24,7 +24,7 @@ folders_list.append(this_folder)
 def find_by_directory(directory : str, this_folder : Folder, root_folder : Folder):
     direction_folders = []
     if not directory: 
-        current_folder = root_folder
+        current_folder = this_folder
         return True, current_folder, None, []
     elif directory[0] == '/':
         directory = directory[1:]
@@ -196,10 +196,8 @@ def new_folder_file_name(path, this_folder, root_folder, name):
     elif file == None and found_bool and folder != None:
         folder.new_name(name)
         
-def mkfile(path, this_folder, root_folder):
-    file_name = input("enter the file name: ")
-    file_format = input("enter the file format: ")
-    if path != '':
+def mkfile(path, this_folder, root_folder, file_name, file_format):
+    if path != None:
         found_bool, folder , file, folders_path = find_by_directory(path,  this_folder, root_folder )
         if found_bool and folder != None and file == None:
             folder : Folder
@@ -288,11 +286,18 @@ while True:
 
    elif command.startswith('mkfile'):
        parts = command.split()
-       if len(parts) > 1:
+       if len(parts) == 2:
+          path = None
+          file_name = parts[1].split('.')[0]
+          file_format = parts[1].split('.')[1]
+          mkfile(path, this_folder, root_folder, file_name, file_format)
+       elif len(parts) == 3:
           path = parts[1]
-          mkfile(path, this_folder, root_folder)
+          file_name = parts[2].split('.')[0]
+          file_format = parts[2].split('.')[1]
+          mkfile(path, this_folder, root_folder, file_name, file_format)
        else:
-          mkfile('', this_folder, root_folder)
+          print("wrong format")
     
            
        
