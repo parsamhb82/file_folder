@@ -248,6 +248,15 @@ def app_file(path, this_folder, root_folder):
     else:
         print("file was not found")
 
+def edit_line(path, this_folder, root_folder, line, text):
+    found, folder, file, _ = find_by_directory(path, this_folder, root_folder)
+    if found and file != None:
+        if line >= len(file.get_text()):
+            print('no such line in file')
+            return
+        file.edit_line(line, text)
+        return
+
 
 
             
@@ -334,6 +343,13 @@ while True:
         parts = command.split()
         path = parts[1]
         app_file(path, this_folder, root_folder)
+   elif command.startswith("editline"):
+       parts = command.split()
+       path = parts[1]
+       line = int(parts[2])
+       text = parts[3]
+       edit_line(path, this_folder, root_folder, line, text)
+
 
     
            
