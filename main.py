@@ -29,6 +29,7 @@ def find_by_directory(directory : str, this_folder : Folder, root_folder : Folde
     elif directory[0] == '/':
         directory = directory[1:]
         current_folder = root_folder
+        direction_folders.append(root_folder)
     else:
         current_folder = this_folder
     directory_list = directory.split('/')
@@ -73,11 +74,13 @@ def cd(directory, current_folder,folders_list, root_folder):
 
     return current_folder, folders_list
 
-def back(folders_list):
+def back(folders_list, root_folder):
     if len(folders_list) > 1:
         folders_list.pop()
         current_folder = folders_list[-1]
         return current_folder, folders_list
+    print("can't go back from root_folder")
+    return root_folder, folders_list
 
 
 
@@ -240,7 +243,7 @@ while True:
 
 
    elif command == '../':
-        this_folder, folders_list = back(folders_list)
+        this_folder, folders_list = back(folders_list, root_folder)
 
 
    elif command.startswith('cat '):
