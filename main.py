@@ -11,7 +11,7 @@ mv -> cut
 rm -> rmv check
 ls -> print all directories check
 filenew -> new text in the file check
-fileedit -> edit a line in the file check
+yfileedit -> edit a line in the file checklfrtrdf
 cat -> file text check
 ../ -> goes back check
 """
@@ -23,8 +23,11 @@ folders_list.append(this_folder)
 
 def find_by_directory(directory : str, this_folder : Folder, root_folder : Folder):
     direction_folders = []
-    if directory[0] == '/':
-        del directory[0]
+    if not directory: 
+        current_folder = root_folder
+        return True, current_folder, None, []
+    elif directory[0] == '/':
+        directory = directory[1:]
         current_folder = root_folder
     else:
         current_folder = this_folder
@@ -55,10 +58,11 @@ def find_by_directory(directory : str, this_folder : Folder, root_folder : Folde
                 return False , None, None, []
             direction_folders.append(current_folder)
 def cd(directory, current_folder,folders_list, root_folder):
+    
     if directory[0] != '/':
         flag = 0
     else:
-        flag = 1
+        flag = 1 
     found, new_folder, file, direction_folders= find_by_directory(directory, current_folder, root_folder)
     if found and file == None and flag == 0:
         for folder in direction_folders:
@@ -70,10 +74,10 @@ def cd(directory, current_folder,folders_list, root_folder):
     return current_folder, folders_list
 
 def back(folders_list):
-    if folders_list:
+    if len(folders_list) > 1:
         folders_list.pop()
         current_folder = folders_list[-1]
-    return current_folder, folders_list
+        return current_folder, folders_list
 
 
 
@@ -201,23 +205,104 @@ def mkfile(path, this_folder, root_folder):
         this_folder : Folder
         this_folder.add_file(file_name, file_format)
 
-def mkfolder(path = None):
+def mkdir(folder_name, path = None):
     found_bool , folder, file, _ = find_by_directory(path,  this_folder, root_folder )
     if found_bool and folder and file == None and path != None:
-        folder_name = input("folder_name: ")
         folder.add_folder(folder_name)
     elif found_bool and folder and file == None and path == None:
-        folder_name = input("folder_name: ")
         this_folder.add_folder(folder_name)
     else:
         print("no such directory")
 
+def move(source_path: str, destination_path: str, this_folder : Folder, root_folder):
+    if '.' in source_path.split('/')[-1]:
+        move_file_to_file(source_path, destination_path, this_folder, root_folder)
+    else:
+        move_folder_to_folder(source_path, destination_path, this_folder, root_folder)
 
+def copy(source_path: str, destination_path: str, this_folder : Folder, root_folder):
+    if '.' in source_path.split('/')[-1]:
+        copy_file_to_file(source_path , destination_path , this_folder , root_folder)
+    else:
+        copy_folder_to_folder(source_path , destination_path , this_folder , root_folder)
+
+
+
+while True:
+   for folder in folders_list:
+       folder : Folder
+       print(folder.get_name(),end = "/")
+   command = input("")
+   
+   if command.startswith('cd '):
+        directory = command[3:]
+        this_folder, folders_list = cd(directory, this_folder, folders_list, root_folder)
+
+
+   elif command == '../':
+        this_folder, folders_list = back(folders_list)
+
+
+   elif command.startswith('cat '):
+        directory  = command[4:]
+        cat(directory, this_folder, root_folder)
+
+   elif command.startswith('mv '):
+        parts = command.split()
+        if len(parts) == 3:
+            _ , source_path, destination_path  = parts
+            move(source_path , destination_path , this_folder , root_folder)
+        else:
+           print("Invalid mv command format. Use: mv source_path destination_path")
+
+   elif command.startswith("cp "):
+        parts = command.split()
+        if len(parts) == 3:
+            _ , source_path, destination_path  = parts
+            copy(source_path , destination_path , this_folder , root_folder)
+        else:
+           print("Invalid cp command format. Use: cp source_path destination_path")
+   elif command.startswith("mkdir "):
+        parts = command.split()
+        path = None
+        if parts[1].startswith('/'):
+           path = parts[1]
+           for name in parts[2:]:
+               mkdir(name, path)
+        else:
+            for name in parts[1:]:
+                mkdir(name, path)
+   elif command.startswith('rm '):
+       parts = command.split()
+       if len(parts) == 2:
+           path = parts[1]
+           remv(path, this_folder, root_folder)
+       else:
+          
+           print("Invalid rm command format. Use: rm path")
+   elif command == 'ls':
+            this_folder.print_all_dir()
+
+   elif command.startswith('mkfile'):
+       parts = command.split()
+       if len(parts) > 1:
+          path = parts[1]
+          mkfile(path, this_folder, root_folder)
+       else:
+          mkfile('', this_folder, root_folder)
+    
+           
+       
         
 
+           
+       
+
+
+
+
+
         
-
-
 
 
 
