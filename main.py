@@ -135,16 +135,7 @@ def copy_file_to_file(source_path: str, destination_path: str, this_folder : Fol
             new_file.new_text(file_text)
 
         return True
-
-def text_input():
-    print("enter your text (0/end/0 = finish)")
-    inp = ''
-    text = []
-    while inp != '0/end/0':
-        inp = input('')
-        text.append(inp)
-    return text
-
+    
 def copy_folder_to_folder(source_path: str , destination_path: str , this_folder : Folder, root_folder) :
     found_source , source_folder , _, _ = find_by_directory(source_path , this_folder, root_folder)
     found_destination , destination_folder, _, _ = find_by_directory(destination_path , this_folder, root_folder)
@@ -226,6 +217,42 @@ def copy(source_path: str, destination_path: str, this_folder : Folder, root_fol
         copy_file_to_file(source_path , destination_path , this_folder , root_folder)
     else:
         copy_folder_to_folder(source_path , destination_path , this_folder , root_folder)
+def new_file_text(path, this_folder, root_folder):
+    found, folder, file, _ = find_by_directory(path, this_folder, root_folder)
+    if found and file != None:
+        text = []
+        print("enter the lines (/end/ means done) ")
+        while(True):
+            inp = input()
+            text.append(inp)
+            if inp == '/end/':
+                break
+        file.new_text(text)
+    else:
+        print("file was not found")
+    
+def app_file(path, this_folder, root_folder):
+    found, folder, file, _ = find_by_directory(path, this_folder, root_folder)
+    if found and file != None:
+        text = []
+        print("enter the lines (/end/ means done) ")
+        while(True):
+            inp = input()
+            text.append(inp)
+            if inp == '/end/':
+                break
+        files_text = file.get_text()
+        del files_text[-1]
+        files_text = files_text + text
+        file.new_text(files_text)
+    else:
+        print("file was not found")
+
+
+
+            
+
+
 
 
 
@@ -299,6 +326,15 @@ while True:
           mkfile(path, this_folder, root_folder, file_name, file_format)
        else:
           print("wrong format")
+   elif command.startswith("nwfile "):
+        parts = command.split()
+        path = parts[1]
+        new_file_text(path, this_folder, root_folder)
+   elif command.startswith("appfile"):
+        parts = command.split()
+        path = parts[1]
+        app_file(path, this_folder, root_folder)
+
     
            
        
