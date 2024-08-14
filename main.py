@@ -364,6 +364,8 @@ while True:
        path = parts[1]
        line = int(parts[2])
        delete_line(path, this_folder, root_folder, line)
+   else : 
+       print("wrong command")
        
 
 
