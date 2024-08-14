@@ -266,13 +266,14 @@ while True:
    elif command.startswith("mkdir "):
         parts = command.split()
         path = None
-        if parts[1].startswith('/'):
+        if len(parts) == 3:
            path = parts[1]
-           for name in parts[2:]:
-               mkdir(name, path)
+           name = parts[2]
+           mkdir(name, path)
         else:
-            for name in parts[1:]:
-                mkdir(name, path)
+            name = parts[1]
+            mkdir(name, path)
+
    elif command.startswith('rm '):
        parts = command.split()
        if len(parts) == 2:
