@@ -256,6 +256,16 @@ def edit_line(path, this_folder, root_folder, line, text):
             return
         file.edit_line(line, text)
         return
+    
+def delete_line(path, this_folder, root_folder, line):
+    found, folder, file, _ = find_by_directory(path, this_folder, root_folder)
+    if found and file != None:
+        if line >= len(file.get_text()):
+            print('no such line in file')
+            return
+    text = file.get_text()
+    del text[line - 1]
+    file.new_text(text)
 
 
 
@@ -349,6 +359,12 @@ while True:
        line = int(parts[2])
        text = parts[3]
        edit_line(path, this_folder, root_folder, line, text)
+   elif command.startswith("deline"):
+       parts = command.split()
+       path = parts[1]
+       line = int(parts[2])
+       delete_line(path, this_folder, root_folder, line)
+       
 
 
     
