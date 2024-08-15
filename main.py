@@ -72,7 +72,7 @@ def cd(directory, current_folder,folders_list, root_folder):
     elif found and file == None and flag == 1 :
         folders_list = direction_folders
 
-    return current_folder, folders_list
+    return new_folder, folders_list
 
 def back(folders_list, root_folder):
     if len(folders_list) > 1:
@@ -197,14 +197,14 @@ def mkfile(path, this_folder, root_folder, file_name, file_format):
         this_folder : Folder
         this_folder.add_file(file_name, file_format)
 
-def mkdir(folder_name, path = None):
-    found_bool , folder, file, _ = find_by_directory(path,  this_folder, root_folder )
-    if found_bool and folder and file == None and path != None:
-        folder.add_folder(folder_name)
-    elif found_bool and folder and file == None and path == None:
+def mkdir(folder_name,this_folder, root_folder, path = None):
+    if path != None:
+        found_bool , folder, file, _ = find_by_directory(path,  this_folder, root_folder )
+        if found_bool == True and file == None:
+            folder.add_folder(folder_name)
+    elif path == None:
+        this_folder : Folder
         this_folder.add_folder(folder_name)
-    else:
-        print("no such directory")
 
 def move(source_path: str, destination_path: str, this_folder : Folder, root_folder):
     if '.' in source_path.split('/')[-1]:
@@ -311,14 +311,13 @@ while True:
            print("Invalid cp command format. Use: cp source_path destination_path")
    elif command.startswith("mkdir "):
         parts = command.split()
-        path = None
         if len(parts) == 3:
            path = parts[1]
            name = parts[2]
-           mkdir(name, path)
+           mkdir(name, this_folder, root_folder, path)
         else:
             name = parts[1]
-            mkdir(name, path)
+            mkdir(name, this_folder, root_folder)
 
    elif command.startswith('rm '):
        parts = command.split()
