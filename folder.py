@@ -36,12 +36,18 @@ class Folder:
         adds a new folder to this directory and sets the name as the new_folder_name
 
         """
-        self.__folders.append(Folder(new_folder_name))
+        if (self.search_folders_by_name(new_folder_name) == None):
+            self.__folders.append(Folder(new_folder_name))
+            return
+        print('this folder already exists')
     def add_file(self, new_file_name, new_file_format):
         """
         adds a new file to this directory and sets its name as the first argumant and format as the second argumant
         """
-        self.__files.append(File(new_file_name,new_file_format))
+        if (self.search_files_by_name(new_file_name, new_file_format) == None):
+            self.__files.append(File(new_file_name,new_file_format))
+            return
+        print('this file already exits')
     
     def print_all_dir(self):
         """
@@ -116,7 +122,11 @@ class Folder:
             return
     
     def folder_adder(self, folder):
-        self.__folders.append(folder)
+        folder : Folder
+        if self.search_folders_by_name(folder.get_name()) == None:
+            self.__folders.append(folder)
+            return
+        print('this folder name already exists')
 
     def new_name(self, name):
         self.__name = name
