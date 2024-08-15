@@ -6,6 +6,7 @@ commands:
 ../
 cat 
 mv done only by root
+cp done only by root 
 mkdir 
 rm : can be done only by root for folder for file root and relatably
 ls 
