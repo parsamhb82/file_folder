@@ -146,7 +146,7 @@ def copy_folder_to_folder(source_path: str , destination_path: str , this_folder
         print("destination folder was not found")
         return False
     else:
-        source_folder.folder_adder(destination_folder)
+        destination_folder.folder_adder(source_folder)
 
 def move_folder_to_folder(source_path: str , destination_path: str , this_folder : Folder, root_folder) :
     found_source , source_folder , _, source_folders = find_by_directory(source_path , this_folder, root_folder)
