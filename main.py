@@ -204,20 +204,33 @@ def remv(file_path, this_folder, root_folder):
         folders_path[-2].rmv(folders_path[-1].get_name())
 
 def new_folder_file_name(path, this_folder, root_folder, name):
-    found_bool, folder , file, folders_path = find_by_directory(path,  this_folder, root_folder)
-    if file != None and found_bool :
-        file : File
-        parts = name.split('.')
-        name = parts[0]
-        format = parts[1]
-        name_check = folder.search_files_by_name(name, format)
-        if name_check == None:
-            file.new_name(name)
-            return
-        else:
-            print('this file name already exists')
-            return
-
+    found_bool, folder, file, folders_list = find_by_directory(path, this_folder, root_folder)
+    
+    if found_bool:
+        if file is not None:
+            parts = name.split('.')
+            if len(parts) != 2:
+                return
+            name = parts[0]
+            format = parts[1]
+            name_check = folder.search_files_by_name(name, format)
+            if name_check is None:
+                file.new_name(name)
+            else:
+                print('This file name already exists.')
+        
+        elif file is None:
+            if len(folders_list) > 1:
+                parent = folders_list[-2]
+                child = folder                
+                if parent.search_folders_by_name(name):
+                    print('This folder name already exists.')
+                else:
+                    child.new_name(name)
+            else:
+                print("Parent folder not found.")
+    else:
+        return
         
 def mkfile(path, this_folder, root_folder, file_name, file_format):
     if path != None:
@@ -396,12 +409,16 @@ while True:
        line = int(parts[2])
        delete_line(path, this_folder, root_folder, line)
    elif command.startswith('rename '):
-       parts = command.split()
-       path = parts[1]
-       name = parts[2]
-       new_folder_file_name(path, this_folder, root_folder, name )
-   else : 
-       print("wrong command")
+        parts = command.split()
+        
+        if len(parts) != 3:
+            print("Invalid command. Correct format: rename <path> <name>")
+        else:
+            path = parts[1]
+            name = parts[2]
+            new_folder_file_name(path, this_folder, root_folder, name)
+   else:
+        print("Wrong command")
        
 
 
