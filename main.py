@@ -99,13 +99,24 @@ def move_file_to_file(source_path: str, destination_path: str, this_folder : Fol
             first_text = destination_file.get_text()
             file_text = first_text + file_text
             destination_file.new_text(file_text)
-        else:
+        elif len(destination_path.split('/')[-1].split('.')) == 2:
             new_file_whole_name = destination_path.split('/')[-1]
             new_file_name = new_file_whole_name.split('.')[0]
             new_file_format = new_file_whole_name.split('.')[1]
             destination_folder.add_file(new_file_name, new_file_format)
             new_file = destination_folder.search_files_by_name(new_file_name, new_file_format)
             new_file.new_text(file_text)
+        elif len(destination_path.split('/')[-1].split('.')) == 1:
+            new_file_whole_name = source_path.split('/')[-1]
+            new_file_name = new_file_whole_name.split('.')[0]
+            new_file_format = new_file_whole_name.split('.')[1]
+            destination_folder.add_file(new_file_name, new_file_format)
+            new_file = destination_folder.search_files_by_name(new_file_name, new_file_format)
+            new_file.new_text(file_text)
+        else:
+            print('wrong')
+            return False
+
 
 
         source_folder.rmv(source_path.split('/')[-1])
@@ -126,15 +137,28 @@ def copy_file_to_file(source_path: str, destination_path: str, this_folder : Fol
             first_text = destination_file.get_text()
             file_text = first_text + file_text
             destination_file.new_text(file_text)
-        else:
+        elif len(destination_path.split('/')[-1].split('.')) == 2:
             new_file_whole_name = destination_path.split('/')[-1]
             new_file_name = new_file_whole_name.split('.')[0]
             new_file_format = new_file_whole_name.split('.')[1]
             destination_folder.add_file(new_file_name, new_file_format)
             new_file = destination_folder.search_files_by_name(new_file_name, new_file_format)
             new_file.new_text(file_text)
+        elif len(destination_path.split('/')[-1].split('.')) == 1:
+            new_file_whole_name = source_path.split('/')[-1]
+            new_file_name = new_file_whole_name.split('.')[0]
+            new_file_format = new_file_whole_name.split('.')[1]
+            destination_folder.add_file(new_file_name, new_file_format)
+            new_file = destination_folder.search_files_by_name(new_file_name, new_file_format)
+            new_file.new_text(file_text)
+        else:
+            print('wrong')
+            return False
+
+
 
         return True
+
     
 def copy_folder_to_folder(source_path: str , destination_path: str , this_folder : Folder, root_folder) :
     found_source , source_folder , _, _ = find_by_directory(source_path , this_folder, root_folder)
