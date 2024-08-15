@@ -207,9 +207,17 @@ def new_folder_file_name(path, this_folder, root_folder, name):
     found_bool, folder , file, folders_path = find_by_directory(path,  this_folder, root_folder)
     if file != None and found_bool :
         file : File
-        file.new_name(name)
-    elif file == None and found_bool and folder != None:
-        folder.new_name(name)
+        parts = name.split('.')
+        name = parts[0]
+        format = parts[1]
+        name_check = folder.search_files_by_name(name, format)
+        if name_check == None:
+            file.new_name(name)
+            return
+        else:
+            print('this file name already exists')
+            return
+
         
 def mkfile(path, this_folder, root_folder, file_name, file_format):
     if path != None:
@@ -387,6 +395,11 @@ while True:
        path = parts[1]
        line = int(parts[2])
        delete_line(path, this_folder, root_folder, line)
+   elif command.startswith('rename '):
+       parts = command.split()
+       path = parts[1]
+       name = parts[2]
+       new_folder_file_name(path, this_folder, root_folder, name )
    else : 
        print("wrong command")
        
